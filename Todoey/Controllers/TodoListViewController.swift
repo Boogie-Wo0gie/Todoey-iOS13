@@ -30,9 +30,7 @@ class TodoListViewController: UITableViewController {
         let newItem3 = Item()
         newItem3.title = "Destry Demogorgon"
         itemArray.append(newItem3)
-//        if let items = defaults.array(forKey: "TodoListArray") as? [String] {
-//            itemArray = items
-//        }
+
     }
 
 
@@ -44,25 +42,27 @@ class TodoListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        
-//        let cell = UITableViewCell(style: .default, reuseIdentifier: "ToDoItemCell")
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
+        let item = itemArray[indexPath.row]
         
-        cell.textLabel?.text = itemArray[indexPath.row].title
+        cell.textLabel?.text = item.title
+        
         
         
         return cell
     }
     
+    
+    
+    
     //MARK: - TableView Delegate methods
     // выбор строки и галочка
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-        if tableView.cellForRow(at: indexPath)?.accessoryType ==  .checkmark {
-            tableView.cellForRow(at: indexPath)?.accessoryType =  .none
-        } else {
-            tableView.cellForRow(at: indexPath)?.accessoryType =  .checkmark
-        }
+        
+        
+        itemArray[indexPath.row].done = !itemArray[indexPath.row].done
+        tableView.reloadData()
+//
 
         tableView.deselectRow(at: indexPath, animated: true)
     }
