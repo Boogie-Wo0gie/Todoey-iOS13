@@ -146,6 +146,13 @@ class SwipeActionsView: UIView {
             actionButton.spacing = options.buttonSpacing ?? 8
             
             actionButton.contentEdgeInsets = buttonEdgeInsets(fromOptions: options)
+//            if #available(iOS 15.0, *) {
+//                var configuration = UIButton.Configuration.plain()
+//                configuration.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+//                actionButton.configuration = configuration
+//            } else {
+//                actionButton.contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+//            }
             
             
             

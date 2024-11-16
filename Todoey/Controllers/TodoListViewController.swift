@@ -8,9 +8,11 @@
 
 import UIKit
 import RealmSwift
+import ChameleonFramework
 
 class TodoListViewController: SwipeViewController  {
     
+    @IBOutlet weak var searchBar: UISearchBar!
     
     let realm = try! Realm()
     var todoItems: Results<Item>?
@@ -27,9 +29,34 @@ class TodoListViewController: SwipeViewController  {
         
         loadItems()
         tableView.rowHeight = 70
- 
-    }
 
+        
+}
+
+//    (появляется перед презентом экрана)
+    override func viewWillAppear(_ animated: Bool) {
+        if let colorHex = selectedCategory?.hexColor {
+            
+            title = selectedCategory!.name
+            
+            guard let navBar = navigationController?.navigationBar else { fatalError("Navigation controller does not exit")}
+            
+            if let navBarColor = UIColor(hexString: colorHex) {
+                navBar.barTintColor = navBarColor
+                navBar.tintColor = ContrastColorOf(navBarColor, returnFlat: true)
+                navBar.scrollEdgeAppearance?.largeTitleTextAttributes = [.foregroundColor: ContrastColorOf(navBarColor, returnFlat: true)]
+                navBar.standardAppearance.largeTitleTextAttributes = [.foregroundColor: ContrastColorOf(navBarColor, returnFlat: true)]
+                
+                searchBar.barTintColor = navBarColor
+                searchBar.searchTextField.backgroundColor = FlatWhite()
+            }
+            
+        }
+    }
+    
+    
+    
+    
     
     
     //MARK: - TableView Datasource Methods
@@ -41,11 +68,17 @@ class TodoListViewController: SwipeViewController  {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
-
-        
+        let number = CGFloat(indexPath.row) / CGFloat(todoItems!.count)
         if let item = todoItems?[indexPath.row] {
             
             cell.textLabel?.text = item.title
+            
+            if let color = UIColor(hexString: selectedCategory!.hexColor)?.darken(byPercentage: number) {
+                cell.backgroundColor = color
+//                cell.textLabel?.textColor = .white.darken(byPercentage: CGFloat(1) - number)  OR ->
+                cell.textLabel?.textColor = ContrastColorOf(color, returnFlat: true)
+            }
+            
             cell.accessoryType = item.done ? .checkmark : .none
         } else {
             cell.textLabel?.text = "No Items Added"

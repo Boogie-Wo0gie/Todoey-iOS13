@@ -16,7 +16,7 @@ class SwipeViewController: UITableViewController, SwipeTableViewCellDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = 70
-
+        tableView.separatorColor = .none
         
     }
     

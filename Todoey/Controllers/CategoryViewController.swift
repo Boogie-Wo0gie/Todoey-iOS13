@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import ChameleonFramework
 
 class CategoryViewController: SwipeViewController {
     
@@ -21,8 +22,18 @@ class CategoryViewController: SwipeViewController {
 
         loadCategory()
         
+        
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        
+        guard let navBar = navigationController?.navigationBar else { fatalError("Navigation controller does not exit")}
+        
+        navBar.backgroundColor = UIColor(hexString: "AF52DE")
+        
+    }
+    
+    
     //MARK: - Add New Categories
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
@@ -32,7 +43,7 @@ class CategoryViewController: SwipeViewController {
             
             let newCategory = Category()
             newCategory.name = textField.text!
-            
+            newCategory.hexColor = UIColor.randomFlat().hexValue()
             self.save(category: newCategory)
         }
         
@@ -58,7 +69,18 @@ class CategoryViewController: SwipeViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
-        cell.textLabel?.text = categories?[indexPath.row].name ?? "No Categories Added Yet"
+        if let category = categories?[indexPath.row] {
+            
+            cell.textLabel?.text = category.name /*?? "No Categories Added Yet"*/
+            
+            guard let categoryColor = UIColor(hexString: category.hexColor) else {fatalError()}
+                 
+            cell.backgroundColor = categoryColor
+            cell.textLabel?.textColor = ContrastColorOf(categoryColor, returnFlat: true)
+            
+        }
+        
+        
                        
         return cell
     }
