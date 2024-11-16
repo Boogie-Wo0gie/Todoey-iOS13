@@ -1,16 +1,30 @@
 PODS:
+  - ChameleonFramework/Default (2.1.0)
+  - ChameleonFramework/Swift (2.1.0):
+    - ChameleonFramework/Default
   - SwipeCellKit (2.7.1)
 
 DEPENDENCIES:
+  - ChameleonFramework/Swift (from `https://github.com/pateldhruvil96/Chameleon.git`)
   - SwipeCellKit
 
 SPEC REPOS:
   trunk:
     - SwipeCellKit
 
+EXTERNAL SOURCES:
+  ChameleonFramework:
+    :git: https://github.com/pateldhruvil96/Chameleon.git
+
+CHECKOUT OPTIONS:
+  ChameleonFramework:
+    :commit: df4dc6e10fd67226fc874d9d91e5c40df5965aa6
+    :git: https://github.com/pateldhruvil96/Chameleon.git
+
 SPEC CHECKSUMS:
+  ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   SwipeCellKit: 3972254a826da74609926daf59b08d6c72e619ea
 
-PODFILE CHECKSUM: 4552c288ea3b880aa4f927b697acbdc5a9d4e450
+PODFILE CHECKSUM: 62aacb681cf91bdc8891b165b5fe0b6d39f8b460
 
 COCOAPODS: 1.16.2
